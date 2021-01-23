@@ -396,3 +396,23 @@ inline Vector2D operator/(const Vector2D& lhs, double val)
 
     return result;
 }
+
+//add vector
+inline Vector2D AddVectors(const Vector2D& vec1, const Vector2D& vec2)
+{
+    Vector2D result(vec1);
+    result.x = result.x + vec2.x;
+    result.y = result.y + vec2.y;
+
+    return result;
+}
+
+//subtract vector
+inline Vector2D SubtractVectors(const Vector2D& vec1, const Vector2D& vec2)
+{
+    Vector2D result(vec1);
+    result.x = result.x - vec2.x;
+    result.y = result.y - vec2.y;
+
+    return result;
+}

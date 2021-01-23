@@ -21,8 +21,11 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     float yPos = 0;
 
     m_pCar = new Vehicle();
-    hr = m_pCar->initMesh(pd3dDevice);
+    m_pCar2 = new Vehicle();
+    hr = m_pCar->initMesh(pd3dDevice, L"car_blue");
+    hr = m_pCar2->initMesh(pd3dDevice, L"car_red");
     m_pCar->setPosition(XMFLOAT3(xPos, yPos, 0));
+    m_pCar2->setPosition(XMFLOAT3(xPos, yPos, 0));
     if (FAILED(hr))
         return hr;
 
@@ -58,15 +61,24 @@ void AIManager::update(const float fDeltaTime)
     }
 
     m_pCar->update(fDeltaTime);
+    m_pCar2->update(fDeltaTime);
 
     checkForCollisions();
 
     AddItemToDrawList(m_pCar);
+    AddItemToDrawList(m_pCar2);
 }
 
 void AIManager::mouseUp(int x, int y)
 {
     m_pCar->setPositionTo(Vector2D(x, y));
+    m_pCar2->setPositionTo(Vector2D(x + 25, y));
+}
+
+void AIManager::space(int x, int y)
+{
+    m_pCar->setPositionTo(Vector2D(x, y));
+    m_pCar2->setPositionTo(Vector2D(x + 25, y));
 }
 
 void AIManager::keyPress(WPARAM param)
@@ -85,6 +97,11 @@ void AIManager::keyPress(WPARAM param)
         }
         case VK_NUMPAD2:
         {
+            break;
+        }
+        case VK_SPACE:
+        {
+            space(0, 0);
             break;
         }
         // etc

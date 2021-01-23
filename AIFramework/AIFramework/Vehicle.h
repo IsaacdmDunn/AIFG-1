@@ -3,11 +3,13 @@
 #include "Vector2D.h"
 
 //#define 
+#define MAX_SPEED1 100
+#define MAX_SPEED2 300
 
 class Vehicle : public DrawableGameObject
 {
 public:
-	virtual HRESULT initMesh(ID3D11Device* pd3dDevice);
+	virtual HRESULT initMesh(ID3D11Device* pd3dDevice, wstring path);
 	virtual void update(const float deltaTime);
 
 	void setMaxSpeed(const float maxSpeed) { m_maxSpeed = maxSpeed; }

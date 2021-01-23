@@ -24,6 +24,7 @@ public:
 	HRESULT initialise(ID3D11Device* pd3dDevice);
 	void	update(const float fDeltaTime);
 	void	mouseUp(int x, int y);
+	void	space(int x, int y);
 	void	keyPress(WPARAM param);
 
 protected:
@@ -33,6 +34,7 @@ private:
 	vecWaypoints            m_waypoints;
 	vecPickups              m_pickups;
 	Vehicle*				m_pCar = nullptr;
+	Vehicle*				m_pCar2 = nullptr;
 
 };
 

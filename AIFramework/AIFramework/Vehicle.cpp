@@ -1,14 +1,14 @@
 #include "Vehicle.h"
 
 
-HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice)
+HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, wstring path)
 {
 	m_scale = XMFLOAT3(30, 20, 1);
-	setTextureName(L"Resources\\car_blue.dds");
+	setTextureName(L"Resources\\" + path + L".dds");
 
 	HRESULT hr = DrawableGameObject::initMesh(pd3dDevice);
 
-	m_maxSpeed = 200;
+	m_maxSpeed = MAX_SPEED2;
 	m_currentSpeed = m_maxSpeed;
 	setVehiclePosition(Vector2D(0, 0));
 
