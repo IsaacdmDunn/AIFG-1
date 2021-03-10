@@ -39,19 +39,19 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     unsigned int index = 0;
     for (unsigned int j = 0; j < WAYPOINT_RESOLUTION; j++) {
         for (unsigned int i = 0; i < WAYPOINT_RESOLUTION; i++) {
-            /*Waypoint* wp = new Waypoint();
+            Waypoint* wp = new Waypoint();
             hr = wp->initMesh(pd3dDevice, index++);
             wp->setPosition(XMFLOAT3(xStart + (xGap * i), yStart + (yGap * j), 0));
-            m_waypoints.push_back(wp);*/
+            m_waypoints.push_back(wp);
         }
     }
 
 
 
-    Waypoint* wp = new Waypoint();
+    /*Waypoint* wp = new Waypoint();
     hr = wp->initMesh(pd3dDevice, 5 * WAYPOINT_RESOLUTION + 3);
     wp->setPosition(XMFLOAT3(xStart + (xGap * 3), yStart + (yGap * 5), 0));
-    m_waypoints.push_back(wp);
+    m_waypoints.push_back(wp);*/
 
     return hr;
 }

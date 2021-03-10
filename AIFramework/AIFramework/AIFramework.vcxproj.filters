@@ -14,6 +14,7 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Behaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -34,6 +35,7 @@
       <Filter>Core</Filter>
     </CLInclude>
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Behaviour.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\blue.dds">

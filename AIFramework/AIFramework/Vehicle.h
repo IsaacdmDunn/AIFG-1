@@ -1,6 +1,7 @@
 #pragma once
 #include "DrawableGameObject.h"
 #include "Vector2D.h"
+#include "Behaviour.h"
 
 //#define 
 #define MAX_SPEED1 100
@@ -21,7 +22,7 @@ public:
 protected:
 	float m_maxSpeed;
 	float m_currentSpeed;
-	
+	Behaviour behaviour;
 	Vector2D m_currentPosition;
 	Vector2D m_startPosition;
 	Vector2D m_positionTo;

@@ -22,25 +22,28 @@ void Vehicle::update(const float deltaTime)
 	// consider replacing with force based acceleration / velocity calculations
 	Vector2D vecTo = m_positionTo - m_currentPosition;
 	float velocity = deltaTime * m_currentSpeed;
+	if (behaviour._state == behaviour.wander)
+	{
+		setPositionTo(Vector2D(m_currentPosition.x + 1, m_currentPosition.y + 1));
+		if (m_currentPosition.x > 512)
+		{
+			setVehiclePosition(Vector2D(-512, m_currentPosition.y));
+		}
+		else if (m_currentPosition.x < -512)
+		{
+			setVehiclePosition(Vector2D(512, m_currentPosition.y));
+		}
+		else if (m_currentPosition.y > 396)
+		{
+			setVehiclePosition(Vector2D(m_currentPosition.x, -396));
+		}
+		else if (m_currentPosition.y < -396)
+		{
+			setVehiclePosition(Vector2D(m_currentPosition.x, 396));
 
-	setVehiclePosition(Vector2D(m_currentPosition.x+0.05, m_currentPosition.y+0.05));
-	if (m_currentPosition.x > 512)
-	{
-		setVehiclePosition(Vector2D(-512, m_currentPosition.y));
+		}
 	}
-	else if (m_currentPosition.x < -512)
-	{
-		setVehiclePosition(Vector2D(512, m_currentPosition.y));
-	}
-	else if (m_currentPosition.y > 396)
-	{
-		setVehiclePosition(Vector2D(m_currentPosition.x, -396));
-	}
-	else if (m_currentPosition.y < -396)
-	{
-		setVehiclePosition(Vector2D(m_currentPosition.x, 396));
-
-	}
+	
 
 
 	float length = (float)vecTo.Length();
