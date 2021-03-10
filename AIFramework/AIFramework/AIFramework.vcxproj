@@ -361,6 +361,7 @@
   <ItemGroup>
     <ClCompile Include="AIManager.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="DrawableGameObject.cpp" />
     <ClCompile Include="main.cpp">
@@ -373,6 +374,7 @@
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="DrawableGameObject.h" />
     <ClInclude Include="main.h">

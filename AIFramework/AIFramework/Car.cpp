@@ -1,7 +1,7 @@
-#include "Vehicle.h"
+#include "Car.h"
 
 
-HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, wstring path)
+HRESULT	Car::initMesh(ID3D11Device* pd3dDevice, wstring path)
 {
 	m_scale = XMFLOAT3(30, 20, 1);
 	setTextureName(L"Resources\\" + path + L".dds");
@@ -17,13 +17,13 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, wstring path)
 	return hr;
 }
 
-void Vehicle::update(const float deltaTime)
+void Car::update(const float deltaTime)
 {
 	// consider replacing with force based acceleration / velocity calculations
 	Vector2D vecTo = m_positionTo - m_currentPosition;
 	float velocity = deltaTime * m_currentSpeed;
 
-	setVehiclePosition(Vector2D(m_currentPosition.x+0.05, m_currentPosition.y+0.05));
+	/*setVehiclePosition(Vector2D(m_currentPosition.x + 0.05, m_currentPosition.y + 0.05));
 	if (m_currentPosition.x > 512)
 	{
 		setVehiclePosition(Vector2D(-512, m_currentPosition.y));
@@ -40,14 +40,14 @@ void Vehicle::update(const float deltaTime)
 	{
 		setVehiclePosition(Vector2D(m_currentPosition.x, 396));
 
-	}
+	}*/
 
 
 	float length = (float)vecTo.Length();
 	// if the distance to the end point is less than the car would move, then only move that distance. 
 	if (length > 0) {
 		vecTo.Normalize();
-		if(length > velocity)
+		if (length > velocity)
 			vecTo *= velocity;
 		else
 			vecTo *= length;
@@ -70,7 +70,7 @@ void Vehicle::update(const float deltaTime)
 }
 
 // a ratio: a value between 0 and 1 (1 being max speed)
-void Vehicle::setCurrentSpeed(const float speed)
+void Car::setCurrentSpeed(const float speed)
 {
 	m_currentSpeed = m_maxSpeed * speed;
 	m_currentSpeed = max(0, m_currentSpeed);
@@ -78,14 +78,14 @@ void Vehicle::setCurrentSpeed(const float speed)
 }
 
 // a position to move to
-void Vehicle::setPositionTo(Vector2D position)
+void Car::setPositionTo(Vector2D position)
 {
 	m_startPosition = m_currentPosition;
 	m_positionTo = position;
 }
 
 // the current position
-void Vehicle::setVehiclePosition(Vector2D position)
+void Car::setVehiclePosition(Vector2D position)
 {
 	m_currentPosition = position;
 	m_positionTo = position;

@@ -10,6 +10,7 @@ public:
     void setVisible(const bool visible) { m_visible = visible; }
     bool isVisible() {return m_visible;}
 
+
 private:
     bool m_isOnTrack;
     bool m_isCheckpoint;

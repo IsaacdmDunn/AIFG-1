@@ -1,5 +1,6 @@
 #include "AIManager.h"
 #include "Vehicle.h"
+#include "Car.h"
 #include "DrawableGameObject.h"
 #include "PickupItem.h"
 #include "Waypoint.h"
@@ -21,7 +22,7 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     float yPos = 0;
 
     m_pCar = new Vehicle();
-    m_pCar2 = new Vehicle();
+    m_pCar2 = new Car();
     hr = m_pCar->initMesh(pd3dDevice, L"car_blue");
     hr = m_pCar2->initMesh(pd3dDevice, L"car_red");
     m_pCar->setPosition(XMFLOAT3(xPos, yPos, 0));
@@ -38,12 +39,19 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     unsigned int index = 0;
     for (unsigned int j = 0; j < WAYPOINT_RESOLUTION; j++) {
         for (unsigned int i = 0; i < WAYPOINT_RESOLUTION; i++) {
-            Waypoint* wp = new Waypoint();
+            /*Waypoint* wp = new Waypoint();
             hr = wp->initMesh(pd3dDevice, index++);
             wp->setPosition(XMFLOAT3(xStart + (xGap * i), yStart + (yGap * j), 0));
-            m_waypoints.push_back(wp);
+            m_waypoints.push_back(wp);*/
         }
     }
+
+
+
+    Waypoint* wp = new Waypoint();
+    hr = wp->initMesh(pd3dDevice, 5 * WAYPOINT_RESOLUTION + 3);
+    wp->setPosition(XMFLOAT3(xStart + (xGap * 3), yStart + (yGap * 5), 0));
+    m_waypoints.push_back(wp);
 
     return hr;
 }
@@ -52,7 +60,7 @@ void AIManager::update(const float fDeltaTime)
 {
     for (unsigned int i = 0; i < m_waypoints.size(); i++) {
         m_waypoints[i]->update(fDeltaTime);
-        //AddItemToDrawList(m_waypoints[i]); // if you comment this in, it will display the waypoints
+        AddItemToDrawList(m_waypoints[i]); // if you comment this in, it will display the waypoints
     }
 
     for (unsigned int i = 0; i < m_pickups.size(); i++) {
@@ -158,5 +166,27 @@ bool AIManager::checkForCollisions()
     return false;
 }
 
+Waypoint* AIManager::getWaypoint(const int x, const int y)
+{
+    Waypoint* w = m_waypoints[y * WAYPOINT_RESOLUTION + x];
+    return w;
+}
+
+//Waypoint* AIManager::getWaypointNeighbours(const int x, const int y)
+//{
+//    /*Waypoint* w[8];
+//    w[0] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x-1];
+//    w[1] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x];
+//    w[2] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x+1];
+//
+//    w[3] = m_waypoints[y * WAYPOINT_RESOLUTION + x-1];
+//    w[4] = m_waypoints[y * WAYPOINT_RESOLUTION + x];
+//    w[5] = m_waypoints[y * WAYPOINT_RESOLUTION + x+1];
+//
+//    w[6] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x-1];
+//    w[7] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x];
+//    w[8] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x+1];*/
+//    return 
+//}
 
 
