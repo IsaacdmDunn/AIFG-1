@@ -22,8 +22,6 @@ void Vehicle::update(const float deltaTime)
 	// consider replacing with force based acceleration / velocity calculations
 	Vector2D vecTo = m_positionTo - m_currentPosition;
 	float velocity = deltaTime * m_currentSpeed;
-	if (behaviour._state == behaviour.wander)
-	{
 		setPositionTo(Vector2D(m_currentPosition.x + 1, m_currentPosition.y + 1));
 		if (m_currentPosition.x > 512)
 		{
@@ -42,7 +40,6 @@ void Vehicle::update(const float deltaTime)
 			setVehiclePosition(Vector2D(m_currentPosition.x, 396));
 
 		}
-	}
 	
 
 

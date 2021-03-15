@@ -2,7 +2,7 @@
 
 Behaviour::Behaviour()
 {
-    _state = wander;
+    
 }
 
 Behaviour::~Behaviour()

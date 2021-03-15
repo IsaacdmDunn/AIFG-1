@@ -35,9 +35,20 @@ private:
 	vecWaypoints            m_waypoints;
 	vecPickups              m_pickups;
 	Vehicle*				m_pCar = nullptr;
-	Car*				m_pCar2 = nullptr;
+	Car*					m_pCar2 = nullptr;
 	Waypoint* getWaypoint(const int x, const  int y);
 	Waypoint* getWaypointNeighbours(const int x, const  int y);
+	void UpdateState();
+	void ChangeState();
 
+	enum state
+	{
+		none,
+		seek,
+		flee,
+		arrive,
+		wander,
+	};
+	state _state = seek;
 };
 

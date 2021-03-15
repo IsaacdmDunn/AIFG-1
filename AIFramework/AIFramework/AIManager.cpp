@@ -58,6 +58,8 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
 
 void AIManager::update(const float fDeltaTime)
 {
+
+    UpdateState();
     for (unsigned int i = 0; i < m_waypoints.size(); i++) {
         m_waypoints[i]->update(fDeltaTime);
         AddItemToDrawList(m_waypoints[i]); // if you comment this in, it will display the waypoints
@@ -80,13 +82,13 @@ void AIManager::update(const float fDeltaTime)
 void AIManager::mouseUp(int x, int y)
 {
     m_pCar->setPositionTo(Vector2D(x, y));
-    m_pCar2->setPositionTo(Vector2D(x + 25, y));
+    //m_pCar2->setPositionTo(Vector2D(x + 25, y));
 }
 
 void AIManager::space(int x, int y)
 {
     m_pCar->setPositionTo(Vector2D(x, y));
-    m_pCar2->setPositionTo(Vector2D(x + 25, y));
+    //m_pCar2->setPositionTo(Vector2D(x + 25, y));
 }
 
 void AIManager::keyPress(WPARAM param)
@@ -172,6 +174,35 @@ Waypoint* AIManager::getWaypoint(const int x, const int y)
     return w;
 }
 
+void AIManager::UpdateState()
+{
+    switch (_state)
+    {
+    case AIManager::none:
+        //do nothing
+        break;
+    case AIManager::seek:
+        //seek player
+        m_pCar2->setPositionTo(Vector2D(m_pCar->getPosition()->x-50, m_pCar->getPosition()->y-50));
+        break;
+    case AIManager::flee:
+        //flee player
+        break;
+    case AIManager::arrive:
+        //arrive?
+        break;
+    case AIManager::wander:
+        //move randomly
+        break;
+    default:
+        break;
+    }
+}
+
+void AIManager::ChangeState()
+{
+}
+
 //Waypoint* AIManager::getWaypointNeighbours(const int x, const int y)
 //{
 //    /*Waypoint* w[8];
@@ -188,5 +219,6 @@ Waypoint* AIManager::getWaypoint(const int x, const int y)
 //    w[8] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x+1];*/
 //    return 
 //}
+
 
 
