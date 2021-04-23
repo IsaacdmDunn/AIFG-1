@@ -58,8 +58,8 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
 
 void AIManager::update(const float fDeltaTime)
 {
-
-    UpdateState();
+    //update FSM
+    UpdateState(m_pCar, m_pCar2);
     for (unsigned int i = 0; i < m_waypoints.size(); i++) {
         m_waypoints[i]->update(fDeltaTime);
         AddItemToDrawList(m_waypoints[i]); // if you comment this in, it will display the waypoints
@@ -70,6 +70,7 @@ void AIManager::update(const float fDeltaTime)
         AddItemToDrawList(m_pickups[i]);
     }
 
+    //update car game object
     m_pCar->update(fDeltaTime);
     m_pCar2->update(fDeltaTime);
 
@@ -79,20 +80,45 @@ void AIManager::update(const float fDeltaTime)
     AddItemToDrawList(m_pCar2);
 }
 
+//mouse 1 pressed
 void AIManager::mouseUp(int x, int y)
 {
     m_pCar->setPositionTo(Vector2D(x, y));
-    //m_pCar2->setPositionTo(Vector2D(x + 25, y));
 }
 
+
+//space pressed
 void AIManager::space(int x, int y)
 {
     m_pCar->setPositionTo(Vector2D(x, y));
-    //m_pCar2->setPositionTo(Vector2D(x + 25, y));
 }
 
 void AIManager::keyPress(WPARAM param)
 {
+    if (GetKeyState('1') && 0x8000)
+    {
+        _state = seek;
+    }
+    if (GetKeyState('2') && 0x8000)
+    {
+        _state = flee;
+    }
+    if (GetKeyState('3') && 0x8000)
+    {
+        _state = arrive;
+    }
+    if (GetKeyState('4') && 0x8000)
+    {
+        _state = pursuit;
+    }
+    if (GetKeyState('5') && 0x8000)
+    {
+        _state = avoid;
+    }
+    if (GetKeyState('6') && 0x8000)
+    {
+        _state = wander;
+    }
     switch (param)
     {
         case VK_NUMPAD0:
@@ -174,8 +200,23 @@ Waypoint* AIManager::getWaypoint(const int x, const int y)
     return w;
 }
 
-void AIManager::UpdateState()
+void AIManager::UpdateState(Vehicle* car, Car* car2)
 {
+    //gets distance from the 2 cars
+    float dist = sqrtf(pow(car2->getPosition()->x - car->getPosition()->x, 2) +
+        pow(car2->getPosition()->y - car->getPosition()->y, 2) * 1.0);
+
+    //FSM decision for flee and seek based on distance from seperate cars
+    if (dist < 50.0f)
+    {
+        _state = flee;
+    }
+    else if (dist > 70.0f)
+    {
+        _state = seek;
+    }
+
+
     switch (_state)
     {
     case AIManager::none:
@@ -183,42 +224,42 @@ void AIManager::UpdateState()
         break;
     case AIManager::seek:
         //seek player
-        m_pCar2->setPositionTo(Vector2D(m_pCar->getPosition()->x-50, m_pCar->getPosition()->y-50));
+        car2->setPositionTo(Vector2D(car->getPosition()->x, car->getPosition()->y));
         break;
     case AIManager::flee:
         //flee player
+        car2->setPositionTo(Vector2D(-car->getPosition()->x, -car->getPosition()->y));
         break;
     case AIManager::arrive:
         //arrive?
         break;
     case AIManager::wander:
-        //move randomly
+        car2->setPositionTo(Vector2D(car2->getPosition()->x - 1, car2->getPosition()->y - 1));
+        if (car2->getPosition()->x > 512)
+        {
+            car2->setVehiclePosition(Vector2D(512, car2->getPosition()->y));
+        }
+        else if (car2->getPosition()->x < -512)
+        {
+            car2->setVehiclePosition(Vector2D(512, car2->getPosition()->y));
+        }
+        else if (m_pCar2->getPosition()->y > 396)
+        {
+            car2->setVehiclePosition(Vector2D(car2->getPosition()->x, -396));
+        }
+        else if (car2->getPosition()->y < -396)
+        {
+            car2->setVehiclePosition(Vector2D(car2->getPosition()->x, 396));
+
+        }
         break;
     default:
         break;
     }
 }
 
-void AIManager::ChangeState()
-{
-}
 
-//Waypoint* AIManager::getWaypointNeighbours(const int x, const int y)
-//{
-//    /*Waypoint* w[8];
-//    w[0] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x-1];
-//    w[1] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x];
-//    w[2] = m_waypoints[y-1 * WAYPOINT_RESOLUTION + x+1];
-//
-//    w[3] = m_waypoints[y * WAYPOINT_RESOLUTION + x-1];
-//    w[4] = m_waypoints[y * WAYPOINT_RESOLUTION + x];
-//    w[5] = m_waypoints[y * WAYPOINT_RESOLUTION + x+1];
-//
-//    w[6] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x-1];
-//    w[7] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x];
-//    w[8] = m_waypoints[y+1 * WAYPOINT_RESOLUTION + x+1];*/
-//    return 
-//}
+
 
 
 

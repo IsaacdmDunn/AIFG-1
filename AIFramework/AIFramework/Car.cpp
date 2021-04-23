@@ -1,6 +1,5 @@
 #include "Car.h"
 
-
 HRESULT	Car::initMesh(ID3D11Device* pd3dDevice, wstring path)
 {
 	m_scale = XMFLOAT3(30, 20, 1);
@@ -19,28 +18,11 @@ HRESULT	Car::initMesh(ID3D11Device* pd3dDevice, wstring path)
 
 void Car::update(const float deltaTime)
 {
-	// consider replacing with force based acceleration / velocity calculations
+	//gets heading for car
 	Vector2D vecTo = m_positionTo - m_currentPosition;
 	float velocity = deltaTime * m_currentSpeed;
 
-	/*setVehiclePosition(Vector2D(m_currentPosition.x + 0.05, m_currentPosition.y + 0.05));
-	if (m_currentPosition.x > 512)
-	{
-		setVehiclePosition(Vector2D(-512, m_currentPosition.y));
-	}
-	else if (m_currentPosition.x < -512)
-	{
-		setVehiclePosition(Vector2D(512, m_currentPosition.y));
-	}
-	else if (m_currentPosition.y > 396)
-	{
-		setVehiclePosition(Vector2D(m_currentPosition.x, -396));
-	}
-	else if (m_currentPosition.y < -396)
-	{
-		setVehiclePosition(Vector2D(m_currentPosition.x, 396));
-
-	}*/
+	
 
 
 	float length = (float)vecTo.Length();
@@ -92,3 +74,6 @@ void Car::setVehiclePosition(Vector2D position)
 	m_startPosition = position;
 	setPosition(XMFLOAT3((float)position.x, (float)position.y, 0));
 }
+
+
+

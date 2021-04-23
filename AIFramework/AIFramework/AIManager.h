@@ -38,7 +38,8 @@ private:
 	Car*					m_pCar2 = nullptr;
 	Waypoint* getWaypoint(const int x, const  int y);
 	Waypoint* getWaypointNeighbours(const int x, const  int y);
-	void UpdateState();
+	void UpdateState(Vehicle* car, Car* car2);
+	void UpdatePath(vecWaypoints* waypoint, Vehicle* car);
 	void ChangeState();
 
 	enum state
@@ -48,7 +49,9 @@ private:
 		flee,
 		arrive,
 		wander,
+		pursuit,
+		avoid,
 	};
-	state _state = seek;
+	state _state = none;
 };
 

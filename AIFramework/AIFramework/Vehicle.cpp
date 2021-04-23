@@ -19,29 +19,9 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, wstring path)
 
 void Vehicle::update(const float deltaTime)
 {
-	// consider replacing with force based acceleration / velocity calculations
+	//gets heading for car
 	Vector2D vecTo = m_positionTo - m_currentPosition;
 	float velocity = deltaTime * m_currentSpeed;
-		setPositionTo(Vector2D(m_currentPosition.x + 1, m_currentPosition.y + 1));
-		if (m_currentPosition.x > 512)
-		{
-			setVehiclePosition(Vector2D(-512, m_currentPosition.y));
-		}
-		else if (m_currentPosition.x < -512)
-		{
-			setVehiclePosition(Vector2D(512, m_currentPosition.y));
-		}
-		else if (m_currentPosition.y > 396)
-		{
-			setVehiclePosition(Vector2D(m_currentPosition.x, -396));
-		}
-		else if (m_currentPosition.y < -396)
-		{
-			setVehiclePosition(Vector2D(m_currentPosition.x, 396));
-
-		}
-	
-
 
 	float length = (float)vecTo.Length();
 	// if the distance to the end point is less than the car would move, then only move that distance. 
